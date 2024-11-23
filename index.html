@@ -51,63 +51,57 @@
 </div>
 </div>
 <div class="mutebutton">
-<p id="mutetext" onclick="toggleMusic()">on</p>
-<input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.3" 
-style="width: 100px; margin-left: 10px;" oninput="adjustVolume(this.value)" />
-</div>
-</div>
-</div>
-<style>
+                <p id="mutetext" onclick="toggleMusic()">on</p>
+                <div class="volume-container">
+                    <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.3" 
+                           oninput="adjustVolume(this.value)" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="backgroundsong" loop="" src="https://cdn.discordapp.com/attachments/1307271539003101254/1309823614509387857/sexsong234.mp3"></audio>
+    <script src="../js/browser.js"></script>
+    <style>
+        /* Cursor styling */
         * {
             cursor: url('https://r2.wya.lol/sexcursor.cur') 8 8, auto !important;
         }
-    </style>
-<audio id="backgroundsong" loop="" src="https://cdn.discordapp.com/attachments/1307271539003101254/1309823614509387857/sexsong234.mp3?ex=6742fbcd&is=6741aa4d&hm=3bea626cd308d35753e97bdf84aad82cf2d54c3c59712ba901d039c20c26fcd1&"></audio>
-<script src="../js/browser.js"></script>
-<script>
-        window.addEventListener("load", (event) => {
-            new cursoreffects.fairyDustCursor({
-                colors: ["#FFF"]
-            });
-        });
-    </script>
-<script>
-        function copyAddress(id) {
-            const svgElement = document.getElementById(id + 'Input');
-            const title = svgElement.getAttribute('title');
-            navigator.clipboard.writeText(title).then(() => {
-                alert('copied to clipboard: ' + title);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
-        function removeOverlay() {
-            var overlay = document.getElementById('overlay');
-            var userpage = document.getElementById('user-page');
-            var audio = document.getElementById('backgroundsong')
-            overlay.style.opacity = '0';
-            userpage.style.display = 'flex';
-            audio.volume = 0.3;
-            audio.play();
-            setTimeout(function() { 
-                overlay.style.display = 'none';
-            }, 2000);
-        }
-        function toggleMusic() {
-            var mutebtn = document.getElementById("mutetext");
-                if (mutebtn.innerHTML == "off") mutebtn.innerHTML = "on";
-                else mutebtn.innerHTML = "off";
-            var audio = document.getElementById('backgroundsong')
-            audio.muted = !audio.muted;
-        }
-      function adjustVolume(volume) {
-    var audio = document.getElementById('backgroundsong');
-    audio.volume = volume;
 
-    // Update slider gradient dynamically
-    var slider = document.getElementById('volumeSlider');
-    slider.style.background = `linear-gradient(90deg, #ff6584 ${volume * 100}%, #ffcc00 ${volume * 100}%)`;
-       }
+        /* Volume container styling */
+        .volume-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 40px;
+            margin-left: 10px;
+            background: rgba(255, 255, 255, 0.1); /* Transparent background */
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Shadow */
+            overflow: hidden;
+            padding: 5px;
+        }
+
+        #volumeSlider {
+            appearance: none;
+            width: 100%;
+            background: linear-gradient(to right, #ff4c4c, #00d1ff);
+            height: 8px;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        #volumeSlider::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #ffffff;
+            border: 2px solid #00d1ff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
         function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
