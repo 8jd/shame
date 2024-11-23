@@ -1,1 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paranoia</title>
+    <style>
+        :root {
+            --primary: #7289da;
+            --primary-dark: #5b6eaa;
+            --text: #ffffff;
+            --bg-dark: #000000;
+            --bg-gradient: linear-gradient(45deg, #000000, #1a1a1a, #2d2d2d);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #000000, #1a1a1a, #2d2d2d);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            cursor: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+            overflow: hidden;
+        }
+
+        body.visible {
+            opacity: 1;
+        }
+
+        .snowflake {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(white, rgba(255,255,255,0.8));
+            border-radius: 50%;
+            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255,255,255,0.9);
+            pointer-events: none;
+            z-index: 1000;
+            transition: transform 0.1s ease-out;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100vh) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px) rotate(360deg);
+            }
+        }
+
+        .enter-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+
+        .enter-text {
+            color: #7289da;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 20px rgba(114, 137, 218, 0.8);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 4rem;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(114, 137, 218, 0.2);
+            max-width: 500px;
+            width: 90%;
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            z-index: 100;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-25px) rotateX(5deg); }
+            100% { transform: translateY(0px) rotateX(0deg); }
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            border: 5px solid #7289da;
+            box-shadow: 0 0 30px rgba(114, 137, 218, 0.7);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            animation: profilePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes profilePulse {
+            0% { box-shadow: 0 0 30px rgba(114, 137, 218, 0.7); transform: scale(1) rotate(0deg); }
+            50% { box-shadow: 0 0 50px rgba(114, 137, 218, 0.9); transform: scale(1.05) rotate(5deg); }
+            100% { box-shadow: 0 0 30px rgba(114, 137, 218, 0.7); transform: scale(1) rotate(0deg); }
+        }
+
+        .profile-img:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 45px rgba(114, 137, 218, 0.9);
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 3.5rem;
+            margin: 0.5rem 0;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #7289da, #ffffff, #7289da);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .discord {
+            color: #7289da;
+            font-size: 1.6rem;
+            margin: 1.5rem 0;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 20px;
+            background: rgba(114, 137, 218, 0.15);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(114, 137, 218, 0.3);
+        }
+
+        .discord:hover {
+            color: #ffffff;
+            background: rgba(114, 137, 218, 0.4);
+            transform: translateY(-3px);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            letter-spacing: 2px;
+            box-shadow: 0 5px 20px rgba(114, 137, 218, 0.4);
+        }
+
+        .social-dropdown {
+            position: relative;
+            margin-top: 3rem;
+        }
+
+        .dropdown-toggle {
+            background: rgba(114, 137, 218, 0.15);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(114, 137, 218, 0.4);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 280px;
+            margin: 0 auto;
+        }
+
+        .dropdown-toggle:hover {
+            background: rgba(114, 137, 218, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(114, 137, 218, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .social-links.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(114, 137, 218, 0.15);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(114, 137, 218, 0.3);
+            font-size: 1.1rem;
+            width: 200px;
+        }
+
+        .social-links a i {
+            margin-right: 1rem;
+            font-size: 1.3rem;
+            color: #7289da;
+        }
+
+        .social-links a:hover {
+            background: rgba(114, 137, 218, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .music-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(114, 137, 218, 0.3);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            transform: translateZ(0);
+            transition: all 0.3s ease;
+        }
+
+        .music-controls:hover {
+            transform: scale(1.05);
+            border-color: rgba(114, 137, 218, 0.5);
+        }
+
+        .music-controls button {
+            background: rgba(114, 137, 218, 0.2);
+            border: 2px solid rgba(114, 137, 218, 0.4);
+            color: #7289da;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-controls button:hover {
+            color: #ffffff;
+            transform: scale(1.15);
+            background: rgba(114, 137, 218, 0.4);
+            box-shadow: 0 0 20px rgba(114, 137, 218, 0.4);
+        }
+
+        .volume-slider {
+            width: 120px;
+            -webkit-appearance: none;
+            background: rgba(114, 137, 218, 0.3);
+            height: 6px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #7289da;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(114, 137, 218, 0.6);
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #ffffff;
+        }
+
+        .song-info {
+            color: #7289da;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(114, 137, 218, 0.4);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(114, 137, 218, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #7289da, #a4b9ff);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 8px;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .progress-bar:hover .progress::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+                margin: 1rem;
+                margin-top: 80px;
+            }
+
+            .profile-img {
+                width: 150px;
+                height: 150px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .music-controls {
+                bottom: 30px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 90%;
+                max-width: 400px;
+            }
+
+            .volume-slider {
+                width: 100%;
+            }
+
+            .social-dropdown,
+            .social-links {
+                width: 100%;
+            }
+
+            .dropdown-toggle {
+                width: 90%;
+            }
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1rem;
+            display: none;
+            justify-content: space-around;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(114, 137, 218, 0.2);
+            z-index: 1000;
+        }
+
+        .mobile-nav button {
+            background: none;
+            border: none;
+            color: #7289da;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav button:hover {
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-nav {
+                display: flex;
+            }
+
+            body {
+                padding-top: 70px;
+            }
+        }
+
+        .sidebar-left, .sidebar-right {
+            display: none;
+        }
+
+        .matrix-text {
+            color: #7289da;
+            text-shadow: 0 0 5px rgba(114, 137, 218, 0.5);
+            animation: matrixFlow 2s linear infinite;
+        }
+
+        @keyframes matrixFlow {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Main cursor dot and circle */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+
+        /* Outer circle */
+        .cursor-cross {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: pulseCircle 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        /* Inner dot */
+        .cursor-figure {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes pulseCircle {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="enter-screen">
+        <div class="enter-text">Welcome to My World</div>
+    </div>
+    <div class="cursor">
+        <div class="cursor-cross"></div>
+        <div class="cursor-figure"></div>
+    </div>
+    <div class="cursor-dot"></div>
+    
+    <div class="container">
+        <img src="https://images-ext-1.discordapp.net/external/7kG8GvaAyFTW94FQsZCs8yiC3GDDqorEamYmQhePvI4/https/cdn.discordapp.com/embed/avatars/3.png?format=webp&quality=lossless&width=281&height=281" alt="Profile" class="profile-img">
+        <h1>Paranoia</h1>
+        <a href="https://discord.com/users/1067225878829998101" class="discord" target="_blank">@pwph</a>
+        
+        <div class="social-dropdown">
+            <div class="dropdown-toggle">
+                <i class="fas fa-share-alt"></i>
+                <span>Social Links</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="music-controls">
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="song-info">Now Playing: Juice WRLD - Death do us part</div>
+        <div style="display: flex; gap: 15px;">
+            <button id="prevTrack"><i class="fas fa-backward"></i></button>
+            <button id="toggleMusic"><i class="fas fa-play"></i></button>
+            <button id="nextTrack"><i class="fas fa-forward"></i></button>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="100">
+        <button id="muteMusic"><i class="fas fa-volume-up"></i></button>
+    </div>
+
+    <nav class="mobile-nav">
+        <button id="homeBtn" onclick="window.location.reload()"><i class="fas fa-home"></i></button>
+        <button id="musicBtn" onclick="toggleMusicControls()"><i class="fas fa-music"></i></button>
+        <button id="shareBtn" onclick="toggleSocialLinks()"><i class="fas fa-share-alt"></i></button>
+        <button id="themeBtn" onclick="toggleTheme()"><i class="fas fa-paint-brush"></i></button>
+    </nav>
+
+    <div class="social-links">
+        <a href="replace me" target="_blank">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+        </a>
+        <a href="replace me" target="_blank">
+            <i class="fab fa-twitter"></i>
+            <span>Twitter</span>
+        </a>
+        <a href="replace me" target="_blank">
+            <i class="fab fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+        <a href="replace me" target="_blank">
+            <i class="fab fa-youtube"></i>
+            <span>YouTube</span>
+        </a>
+    </div>
+
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.top = '-10px';
+            const size = Math.random() * 5 + 2;
+            snowflake.style.width = size + 'px';
+            snowflake.style.height = size + 'px';
+            snowflake.style.opacity = Math.random() * 0.8 + 0.3;
+            const duration = Math.random() * 4 + 2;
+            const delay = Math.random() * 2;
+            snowflake.style.animation = `snowfall ${duration}s linear ${delay}s`;
+            document.body.appendChild(snowflake);
+            setTimeout(() => {
+                snowflake.remove();
+            }, (duration + delay) * 1000);
+        }
+
+        setInterval(createSnowflake, 50);
+
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        const enterScreen = document.querySelector('.enter-screen');
+        const body = document.querySelector('body');
+        const toggleMusicBtn = document.getElementById('toggleMusic');
+        const muteMusicBtn = document.getElementById('muteMusic');
+        const prevTrackBtn = document.getElementById('prevTrack');
+        const nextTrackBtn = document.getElementById('nextTrack');
+        const volumeSlider = document.querySelector('.volume-slider');
+        const progressBar = document.querySelector('.progress');
+        const socialDropdown = document.querySelector('.social-dropdown');
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const musicControls = document.querySelector('.music-controls');
+        let audio;
+
+        const playlist = [
+            'https://cf-media.sndcdn.com/WU2HyhwDDniL.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vV1UySHlod0REbmlMLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzMwNTgzNDcyfX19XX0_&Signature=JIsF7MErk4Moe~eEr9zrYUqJS1YbIuESxS9tVBTfRqmzFtkN8Gj3E22iBmJCLDSDkhU8YAJ34zqTyw58iJ2aQYg9MFNgaZk6f~074lmXRwzfQzB3HuUOeteiI-R-2dMNDW~UcG0uWFU9TXPxuVbf4DZprbWIsZpHfKL3kWssaYczUCkolHKpbADlvN2PvriEsMLTKkF6kjjg1nc~E6xMYl3quo423KWz~A5qTl0O0dXtd-KCr59hPd31eHWFNbKHa5R5oJgzaRvCZNrRtl2xtUT0Jq38p-GKL2oZRDJvmHg7Hi7CRr6~e5mPHrU2FAV3O2225Da7ASP2Y8-fESLvwA__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ'
+        ];
+        let currentTrack = 0;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        let cursorDotX = 0;
+        let cursorDotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            cursorDotX += (mouseX - cursorDotX) * 0.2;
+            cursorDotY += (mouseY - cursorDotY) * 0.2;
+            cursorDot.style.left = cursorDotX + 'px';
+            cursorDot.style.top = cursorDotY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.querySelectorAll('a, .profile-img, button, .volume-slider, .progress-bar, .dropdown-toggle').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorDot.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorDot.classList.remove('hover');
+            });
+        });
+
+        dropdownToggle.addEventListener('click', () => {
+            document.querySelector('.social-links').classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            const socialLinks = document.querySelector('.social-links');
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            if (!socialLinks.contains(e.target) && !dropdownToggle.contains(e.target)) {
+                socialLinks.classList.remove('active');
+            }
+        });
+
+        enterScreen.addEventListener('click', () => {
+            enterScreen.style.opacity = '0';
+            body.classList.add('visible');
+            setTimeout(() => {
+                enterScreen.style.display = 'none';
+            }, 500);
+
+            audio = new Audio(playlist[currentTrack]);
+            audio.play();
+            toggleMusicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+
+            setInterval(() => {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = progress + '%';
+            }, 100);
+        });
+
+        let isPlaying = true;
+        toggleMusicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                toggleMusicBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audio.play();
+                toggleMusicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        let isMuted = false;
+        muteMusicBtn.addEventListener('click', () => {
+            if (isMuted) {
+                audio.volume = volumeSlider.value / 100;
+                muteMusicBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } else {
+                audio.volume = 0;
+                muteMusicBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+            isMuted = !isMuted;
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+            if (e.target.value == 0) {
+                muteMusicBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                isMuted = true;
+            } else {
+                muteMusicBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                isMuted = false;
+            }
+        });
+
+        document.querySelector('.progress-bar').addEventListener('click', (e) => {
+            const clickPosition = e.offsetX / e.target.offsetWidth;
+            audio.currentTime = clickPosition * audio.duration;
+        });
+
+        prevTrackBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            audio.src = playlist[currentTrack];
+            audio.play();
+            isPlaying = true;
+            toggleMusicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+
+        nextTrackBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            audio.src = playlist[currentTrack];
+            audio.play();
+            isPlaying = true;
+            toggleMusicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+
+        audio?.addEventListener('ended', () => {
+            nextTrackBtn.click();
+        });
+
+        function toggleMusicControls() {
+            musicControls.style.display = musicControls.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function toggleSocialLinks() {
+            document.querySelector('.social-links').classList.toggle('active');
+        }
+
+        let currentTheme = 'dark';
+        function toggleTheme() {
+            if (currentTheme === 'dark') {
+                document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(45deg, #ffffff, #f0f0f0, #e0e0e0)');
+                currentTheme = 'light';
+            } else {
+                document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(45deg, #000000, #1a1a1a, #2d2d2d)');
+                currentTheme = 'dark';
+            }
+        }
+
+        function updateSnowflakes(mouseX, mouseY) {
+            document.querySelectorAll('.snowflake').forEach(snowflake => {
+                const rect = snowflake.getBoundingClientRect();
+                const distX = mouseX - (rect.left + rect.width / 2);
+                const distY = mouseY - (rect.top + rect.height / 2);
+                const distance = Math.sqrt(distX * distX + distY * distY);
+                
+                if (distance < 100) {
+                    const angle = Math.atan2(distY, distX);
+                    const force = (100 - distance) / 10;
+                    snowflake.style.transform = `translate(${Math.cos(angle) * force}px, ${Math.sin(angle) * force}px)`;
+                }
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            updateSnowflakes(e.clientX, e.clientY);
+        });
+    </script>
+</body>
