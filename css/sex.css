@@ -340,7 +340,7 @@ body {
 /* mute button setup */
 
 .breathing {
-    background: linear-gradient(90deg, transparent 20%, #fff 50%, transparent 50%);
+    background: linear-gradient(90deg, transparent 80%, #fff 50%, transparent 90%);
     background-size: 200%;
     background-clip: text;
     -webkit-text-fill-color: transparent;
