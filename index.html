@@ -100,9 +100,13 @@ style="width: 100px; margin-left: 10px;" oninput="adjustVolume(this.value)" />
             var audio = document.getElementById('backgroundsong')
             audio.muted = !audio.muted;
         }
-       function adjustVolume(volume) {
+      function adjustVolume(volume) {
     var audio = document.getElementById('backgroundsong');
     audio.volume = volume;
+
+    // Update slider gradient dynamically
+    var slider = document.getElementById('volumeSlider');
+    slider.style.background = `linear-gradient(90deg, #ff6584 ${volume * 100}%, #ffcc00 ${volume * 100}%)`;
        }
         function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
