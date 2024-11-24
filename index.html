@@ -21,7 +21,32 @@
 <button class="overlaybtn" onclick="removeOverlay()">click to enter...</button>
 </div>
 <div id="user-page">
-<video autoplay muted loop playsinline class="background" src="../videos/sexbanner234.mp4"></video>
+<video id="backgroundVideo" autoplay muted loop playsinline class="background" src="../videos/sexbanner234.mp4"></video>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const video = document.getElementById("backgroundVideo");
+
+        // Fallback for browsers with stricter autoplay policies
+        if (video) {
+            // Try to play the video programmatically
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        // Autoplay works
+                        console.log("Video autoplay started successfully.");
+                    })
+                    .catch((error) => {
+                        // Autoplay was prevented, attempt to play muted
+                        console.warn("Autoplay was blocked. Attempting muted playback.", error);
+                        video.muted = true;
+                        video.play();
+                    });
+            }
+        }
+    });
+</script>
 <div class="main-container">
 <div class="profile-container">
 <img class="pp" src="../images/sexpp234.jpg"/>
