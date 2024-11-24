@@ -23,27 +23,22 @@
 <div id="user-page">
 <video id="backgroundVideo" autoplay muted loop playsinline class="background" src="../videos/sexbanner234.mp4"></video>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const video = document.getElementById("backgroundVideo");
+    // Ensure autoplay for video
+    const video = document.getElementById('backgroundVideo');
 
-        // Fallback for browsers with stricter autoplay policies
-        if (video) {
-            // Try to play the video programmatically
-            const playPromise = video.play();
+    // Try to play the video on load
+    window.addEventListener('load', () => {
+        video.play().catch(error => {
+            console.log('Autoplay failed, waiting for user interaction:', error);
+        });
+    });
 
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        // Autoplay works
-                        console.log("Video autoplay started successfully.");
-                    })
-                    .catch((error) => {
-                        // Autoplay was prevented, attempt to play muted
-                        console.warn("Autoplay was blocked. Attempting muted playback.", error);
-                        video.muted = true;
-                        video.play();
-                    });
-            }
+    // Fallback: Trigger playback on first user interaction
+    document.body.addEventListener('click', () => {
+        if (video.paused) {
+            video.play().catch(error => {
+                console.error('Playback error:', error);
+            });
         }
     });
 </script>
