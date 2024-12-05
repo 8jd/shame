@@ -92,7 +92,7 @@ function memberCall(pfpSrc, textContent, user) {
     }
 }
 
-function liam() {
+function rot() {
     memberCall(
         "assets/rot_icon.png",
         "<a href='numb.lol' target='_blank' style='color: white;'>numb</a>, <a href='https://instagram.com/cyxt' target='_blank' style='color: white;'>instagram</a>",
