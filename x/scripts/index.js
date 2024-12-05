@@ -96,7 +96,7 @@ function liam() {
     memberCall(
         "assets/liam_icon.png",
         "<a href='numb.lol' target='_blank' style='color: white;'>numb</a>, <a href='https://instagram.com/cyxt' target='_blank' style='color: white;'>instagram</a>",
-        "lsd"
+        "liam"
     );
 }
 
@@ -104,7 +104,7 @@ function lain() {
     memberCall(
         "assets/lain_icon.png",
         "<a href='https://namemc.com/_2' target='_blank' style='color: white;'>namemc</a>, <a href='https://instagram.com/axst' target='_blank' style='color: white;'>instagram</a>, <a href='https://x.com/eternallyexile' target='_blank' style='color: white;'>x</a>",
-        "rainku"
+        "lain"
     );
 }
 
@@ -112,7 +112,7 @@ function op() {
     memberCall(
         "assets/op_icon.png",
         "<a href='https://discord.com/users/1125520697100345445' target='_blank' style='color: white;'>discord</a>, <a href='https://instagram.com/2facd' target='_blank' style='color: white;'>instagram</a>",
-        "valexnt"
+        "op"
     );
 }
 
