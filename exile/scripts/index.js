@@ -2,10 +2,6 @@ let transitionActive = false;
 var song = document.getElementById("song");
 var current_page = "main";
 
-
-//PAGE LOADING
-
-
 function startHome() {
     if (transitionActive) return;
     transitionActive = true;
