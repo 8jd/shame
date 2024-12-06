@@ -107,7 +107,7 @@ function lain() {
 function op() {
     memberCall(
         "assets/op_icon.png",
-        "<a href='https://discord.com/users/1125520697100345445' target='_blank' style='color: white;'>discord</a>, <a href='https://instagram.com/2facd' target='_blank' style='color: white;'>instagram</a>",
+        "<a href='https://github.com/tarnishing' target='_blank' style='color: white;'>github</a>, <a href='https://instagram.com/2facd' target='_blank' style='color: white;'>instagram</a>",
         "op"
     );
 }
