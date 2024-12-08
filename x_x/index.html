@@ -44,22 +44,10 @@
   </style>
 </head>
 <body>
+  <audio id="song" src="assets/song.mp3" autoplay loop></audio>
+
   <div class="text-container">
     This is synced text!
   </div>
-
-  <audio id="background-music" loop>
-    <source src="background.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const audio = document.getElementById('background-music');
-      audio.play().catch(error => {
-        console.warn('Autoplay was blocked:', error);
-      });
-    });
-  </script>
 </body>
 </html>
